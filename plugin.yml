@@ -1,0 +1,8 @@
+name: PrisonScore
+version: 1.0.0
+api: 3.0.0
+main: TPE\PrisonScore\PrisonScore
+author: TPE
+depend:
+  - ScoreHud
+  - Prisons
