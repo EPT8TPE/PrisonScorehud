@@ -7,6 +7,7 @@ namespace TPE\PrisonScore\Listeners;
 use pocketmine\event\Listener;
 use Ifera\ScoreHud\event\TagsResolveEvent;
 use TPE\Prisons\Prisons;
+use TPE\Prisons\Utils;
 
 class TagResolveListener implements Listener {
 
@@ -21,23 +22,21 @@ class TagResolveListener implements Listener {
 
         switch ($tags[1]) {
             case "rank":
-                Prisons::get()->getPrisonRank($event->getPlayer(), function (array $rows) use($tag) {
-                    foreach ($rows as $row) {
-                        $currentRank = $row[0]['prisonrank'];
-                    }
-
-                    $tag->setValue(strval($currentRank));
-                });
+                $member = Prisons::get()->getPlayerManager()->getPlayer($event->getPlayer()) ?? null;
+                if(!is_null($member)) {
+                    $tag->setValue(strval(Utils::getRankName($member->getPrisonRank())));
+                } else {
+                    $tag->setValue("");
+                }
             break;
 
             case "prestige":
-                Prisons::get()->getPrisonPrestige($event->getPlayer(), function (array $rows) use($tag) {
-                    foreach ($rows as $row) {
-                        $currentPrestige = $row[0]['prestige'];
-                    }
-
-                    $tag->setValue(strval($currentPrestige));
-                });
+                $member = Prisons::get()->getPlayerManager()->getPlayer($event->getPlayer()) ?? null;
+                if(!is_null($member)) {
+                    $tag->setValue(strval($member->getPrestige()));
+                } else {
+                    $tag->setValue("");
+                }
             break;
         }
     }
