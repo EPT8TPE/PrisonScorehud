@@ -11,7 +11,7 @@ use TPE\Prisons\Utils;
 
 class TagResolveListener implements Listener {
 
-    public function onTagResolve(TagResolveEvent $event) {
+    public function onTagResolve(TagsResolveEvent $event) {
         $tag = $event->getTag();
         $tags = explode('.', $tag->getName(), 2);
         $value = "";
